@@ -1,0 +1,74 @@
+arrayStack.h
+#pragma once
+#define STACK_SIZE  50 // 배열의 길이값
+
+typedef int element;
+element stack[STACK_SIZE];
+
+int isStackEmpty(void);
+int isStackFull(void);
+void push(element item);
+element pop(void);
+void printStack(void);
+
+
+arrayStack.c
+#include<stdio.h>
+#include"arrayStack.h"
+
+int top = -1;
+
+int isStackEmpty(void) {
+	if (top == -1) return 1;
+	else return 0;
+}
+
+int isStackFull(void) {
+	if (top == STACK_SIZE - 1) return 1;
+	else return 0;
+}
+
+void push(element item) {
+	if (isStackFull()) {
+		printf("스택이 포화상태입니다.\n");
+		return;
+	}
+	else
+		stack[++top] = item; // top를 증가시킨 후에 top위치에 원소 삽입 
+
+}
+
+element  pop(void) {
+	if (isStackEmpty()) {
+		printf("스택이 공백입니다.\n");
+		return 0;
+	}
+	else return stack[top--]; // 현재 top 원소 확인
+}
+
+void printStack(void) {
+	printf("\n stack[ ");
+	for (int i = 0; i <= top; i++)
+		printf("%d", stack[i]);
+	printf("] ");
+}
+
+
+
+arrayStackTest.c
+#include<stdio.h>
+#include"arrayStack.h"
+
+int main(void) {
+	element item;
+	push(1); printStack();
+	push(2); printStack();
+	push(3); printStack();
+
+	item = pop(); printStack();
+	printf("\t pop : %d", item);
+	item = pop(); printStack();
+	printf("\t pop : %d", item);
+
+	return 0;
+}

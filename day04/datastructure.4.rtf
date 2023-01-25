@@ -1,0 +1,200 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset129 AppleSDGothicNeo-Regular;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 queue.h\
+\
+#pragma once\
+#define Q_SIZE  5\
+\
+typedef char element;  // 
+\f1 \'c5\'a5\'c0\'c7
+\f0  
+\f1 \'bf\'f8\'bc\'d2\'c0\'c7
+\f0  
+\f1 \'c0\'da\'b7\'e1\'c7\'fc\'c0\'bb
+\f0  char
+\f1 \'b7\'ce
+\f0  
+\f1 \'c1\'a4\'c0\'c7\'c7\'d1\'b4\'d9
+\f0 . \
+\
+typedef struct \{\
+	element queue[Q_SIZE];\
+	int front, rear; // 
+\f1 \'c3\'ca\'b1\'e2\'b0\'aa\'c0\'ba
+\f0  -1
+\f1 \'c0\'bb
+\f0  
+\f1 \'b0\'a1\'c1\'f6\'b0\'ed
+\f0  
+\f1 \'c0\'d6\'b4\'d9
+\f0 . \
+\}QueueType; \
+\
+QueueType* createQueue(void);\
+int isQueueEmpty(QueueType* Q);\
+int isQueueFull(QueueType* Q);\
+void enQueue(QueueType* Q, element item);\
+element deQueue(QueueType** Q);\
+void printQ(QueueType* Q);\
+\
+\
+\
+queue.c\
+#include<stdio.h>\
+#include<stdlib.h>\
+#include"queue.h"\
+\
+QueueType* createQueue(void) \{ // 
+\f1 \'b0\'f8\'b9\'e9
+\f0  
+\f1 \'c5\'a5\'b8\'a6
+\f0  
+\f1 \'bb\'fd\'bc\'ba\'c7\'cf\'b4\'c2
+\f0  
+\f1 \'bf\'ac\'bb\'ea\'c0\'da
+\f0 \
+	QueueType* Q;\
+	Q = (QueueType*)malloc(sizeof(QueueType));\
+	Q->front = -1;\
+	Q->rear = -1;\
+	return Q;\
+\}\
+\
+// 
+\f1 \'c5\'a5\'b0\'a1
+\f0  
+\f1 \'b0\'f8\'b9\'e9
+\f0  
+\f1 \'bb\'f3\'c5\'c2\'c0\'ce\'c1\'f6
+\f0  
+\f1 \'b0\'cb\'bb\'e7\'c7\'cf\'b4\'c2
+\f0  
+\f1 \'bf\'ac\'bb\'ea\'c0\'da
+\f0 . \
+int isQueueEmpty(QueueType* Q) \{\
+	if (Q->front == Q->rear) \{\
+		printf("
+\f1 \'c5\'a5\'b0\'a1
+\f0  
+\f1 \'b0\'f8\'b9\'e9\'c0\'d4\'b4\'cf\'b4\'d9
+\f0 .\\n");\
+		return 1;\
+	\}\
+	else return 0;\
+\}\
+\
+int isQueueFull(QueueType* Q) \{\
+	if (Q->rear == Q_SIZE - 1) \{\
+		printf("
+\f1 \'c5\'a5\'b4\'c2
+\f0  full 
+\f1 \'c0\'d4\'b4\'cf\'b4\'d9
+\f0 .\\n");\
+		return 1;\
+	\}\
+	else return 0;\
+\}\
+\
+void enQueue(QueueType* Q, element item) \{\
+	if (isQueueFull(Q)) return; // 
+\f1 \'c6\'f7\'c8\'ad
+\f0  
+\f1 \'bb\'f3\'c5\'c2\'c0\'cc\'b8\'e9
+\f0  
+\f1 \'c1\'df\'b4\'dc
+\f0 \
+	else\{\
+		Q->rear++;\
+		Q->queue[Q -> rear] = item;\
+    \}\
+\}\
+\
+element deQueue(QueueType* Q) \{ // 
+\f1 \'bf\'f8\'bc\'d2\'b8\'a6
+\f0  
+\f1 \'bb\'e8\'c1\'a6
+\f0 \
+	if (isQueueEmpty(Q)) return;  // 
+\f1 \'b0\'f8\'b9\'e9\'bb\'f3\'c5\'c2\'c0\'cc\'b8\'e9
+\f0  
+\f1 \'c1\'df\'b4\'dc
+\f0 \
+	else \{\
+		Q->front++;\
+		return Q->queue[Q->front];\
+	\}\
+\}\
+\
+// 
+\f1 \'bf\'f8\'bc\'d2
+\f0  
+\f1 \'c5\'a5\'b8\'a6
+\f0  
+\f1 \'c3\'e2\'b7\'c2
+\f0 \
+void printQ(QueueType* Q) \{\
+	printf("Queue : [");\
+	for (int i = Q->front + 1; i <= Q->rear; i++)\
+		printf("%c", Q->queue[i]);\
+	printf(" ]");\
+\}\
+\
+\
+queueTest.c\
+#include"queue.h"\
+\
+int main(void) \{\
+	QueueType* Q1 = createQueue();  // 
+\f1 \'c5\'a5\'b8\'a6
+\f0  
+\f1 \'bb\'fd\'bc\'ba
+\f0 \
+	element data;\
+\
+	printf("\\n
+\f1 \'bb\'f0\'c0\'d4
+\f0  A>"); enQueue(Q1, 'A'); printQ(Q1);\
+	printf("\\n
+\f1 \'bb\'f0\'c0\'d4
+\f0  B>"); enQueue(Q1, 'B'); printQ(Q1);\
+	printf("\\n
+\f1 \'bb\'f0\'c0\'d4
+\f0  C>"); enQueue(Q1, 'C'); printQ(Q1);\
+	printf("\\n
+\f1 \'bb\'f0\'c0\'d4
+\f0  D>"); enQueue(Q1, 'D'); printQ(Q1);\
+	printf("\\n
+\f1 \'bb\'e8\'c1\'a6
+\f0  >"); data = deQueue(Q1); printQ(Q1);\
+	printf("\\t 
+\f1 \'bb\'e8\'c1\'a6
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd\'b4\'c2
+\f0  : %c", data);\
+	printf("\\n
+\f1 \'bb\'e8\'c1\'a6
+\f0  >"); data = deQueue(Q1); printQ(Q1);\
+	printf("\\t 
+\f1 \'bb\'e8\'c1\'a6
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd\'b4\'c2
+\f0  : %c", data);\
+	printf("\\n
+\f1 \'bb\'e8\'c1\'a6
+\f0  >"); data = deQueue(Q1); printQ(Q1);\
+	printf("\\t 
+\f1 \'bb\'e8\'c1\'a6
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd\'b4\'c2
+\f0  : %c", data);\
+\
+	return 0;\
+\}\
+\
+\
+}

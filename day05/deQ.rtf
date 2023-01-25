@@ -1,0 +1,258 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset129 AppleSDGothicNeo-Regular;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 deQueu.h\
+\
+#pragma once\
+\
+typedef char element; // 
+\f1 \'bf\'f8\'bc\'d2
+\f0 (element)
+\f1 \'c0\'c7
+\f0  
+\f1 \'c0\'da\'b7\'e1\'c7\'fc\'c0\'bb
+\f0  char
+\f1 \'b7\'ce
+\f0  
+\f1 \'c1\'a4\'c0\'c7
+\f0  \
+\
+typedef struct DQNode \{\
+	element data;\
+	struct DQNode* llink;\
+	struct DQNode* rlink;\
+\}DQNode;\
+\
+typedef struct \{\
+	DQNode* front, * rear;\
+\}DQueType;\
+\
+DQueType* createDQue(void);\
+int isDqQEmpty(DQueType* DQ);\
+void insertFront(DQueType* DQ, element item);\
+void insertRear(DQueType* DQ, element item);\
+element deleteFront(DQueType* DQ);\
+element deleteRear(DQueType* DQ);\
+void printDQ(DQueType* DQ);\
+\
+\
+\
+deQue.c\
+#include<stdio.h>\
+#include<stdlib.h>\
+#include"deQue.h"\
+\
+// 
+\f1 \'b0\'f8\'b9\'e9
+\f0  
+\f1 \'b5\'a5\'c5\'a9
+\f0  
+\f1 \'bb\'fd\'bc\'ba
+\f0 \
+DQueType* createDQue(void) \{\
+	DQueType* DQ;\
+	DQ = (DQueType*)malloc(sizeof(DQueType));\
+	DQ->front = NULL;\
+	DQ->rear = NULL;\
+	return DQ;\
+\}\
+\
+// 
+\f1 \'b5\'a5\'c5\'a9\'b0\'a1
+\f0  
+\f1 \'b0\'f8\'b9\'e9\'c0\'ce\'c1\'f6
+\f0   
+\f1 \'b0\'cb\'bb\'e7\'c7\'cf\'b4\'c2
+\f0  
+\f1 \'bf\'ac\'bb\'ea
+\f0 \
+int isDqQEmpty(DQueType* DQ) \{\
+	if (DQ->front == NULL) return 1;\
+	else return 0;\
+\}\
+\
+// front
+\f1 \'be\'d5\'c0\'b8\'b7\'ce
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd
+\f0  
+\f1 \'bb\'f0\'c0\'d4
+\f0 \
+void insertFront(DQueType* DQ, element item) \{\
+	DQNode* newNode = (DQNode*)malloc(sizeof(DQNode));\
+	newNode->data = item;\
+	if (isDqQEmpty(DQ)) \{  // 
+\f1 \'b5\'a5\'c5\'a9\'b0\'a1
+\f0  
+\f1 \'b0\'f8\'b9\'e9
+\f0  
+\f1 \'bb\'f3\'c5\'c2\'c0\'ce
+\f0  
+\f1 \'b0\'e6\'bf\'ec
+\f0 \
+		DQ->front = newNode;\
+		DQ->rear = newNode;\
+		newNode -> rlink = NULL;\
+		newNode->llink = NULL;\
+	\}\
+	else \{\
+		DQ->front->llink = newNode;\
+		newNode->rlink = DQ->front;\
+		newNode->llink = NULL;\
+		DQ->front = newNode;\
+	\}\
+\}\
+\
+// rear
+\f1 \'b5\'da\'b7\'ce
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd
+\f0  
+\f1 \'bb\'f0\'c0\'d4
+\f0 \
+void insertRear(DQueType* DQ, element item) \{\
+	DQNode* newNode = (DQNode*)malloc(sizeof(DQNode));\
+	newNode->data = item;\
+	if (isDqQEmpty(DQ)) \{\
+		DQ->front = newNode;\
+		DQ->rear = newNode;\
+		newNode->rlink = NULL;\
+		newNode->llink = NULL;\
+	\}\
+	else \{\
+		DQ->front->rlink = newNode;\
+		newNode->rlink = NULL;\
+		newNode->llink = DQ->rear;\
+		DQ->rear = newNode;\
+	\}\
+\}\
+\
+// front
+\f1 \'be\'d5\'c0\'b8\'b7\'ce
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd
+\f0  
+\f1 \'bb\'e8\'c1\'a6
+\f0 \
+element deleteFront(DQueType* DQ) \{\
+	DQNode* old = DQ->front;\
+	element item;\
+	if (isDqQEmpty(DQ)) \{\
+		printf("
+\f1 \'b5\'a5\'c5\'a9\'b4\'c2
+\f0  
+\f1 \'ba\'f1\'be\'ee\'c0\'d6\'bd\'c0\'b4\'cf\'b4\'d9
+\f0 . \\n");\
+		return;\
+	\}\
+	else \{\
+		item = old->data;\
+		if(DQ->front->rlink == NULL) \{\
+			DQ->front = NULL;\
+			DQ->rear = NULL;\
+		\}\
+		else \{\
+			DQ->front = DQ->front->rlink;\
+			DQ->front->llink = NULL;\
+		\}\
+		free(old);\
+		return item;\
+	\}\
+\}\
+\
+// rear
+\f1 \'b5\'da\'c2\'ca\'c0\'b8\'b7\'ce
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd
+\f0  
+\f1 \'bb\'e8\'c1\'a6
+\f0 \
+element deleteRear(DQueType* DQ) \{\
+	DQNode* old = DQ->rear;\
+	element item;\
+	if (isDqQEmpty(DQ)) \{\
+		printf("
+\f1 \'b5\'a5\'c5\'a9\'b4\'c2
+\f0  
+\f1 \'ba\'f1\'be\'ee\'c0\'d6\'bd\'c0\'b4\'cf\'b4\'d9
+\f0 . \\n");\
+		return;\
+	\}\
+	else \{\
+		item = old->data;\
+		if (DQ->rear->llink == NULL) \{\
+			DQ->front = NULL;\
+			DQ->rear = NULL;\
+		\}\
+		else \{\
+			DQ->rear = DQ->rear->llink;\
+			DQ->rear->rlink = NULL;\
+		\}\
+		free(old);\
+		return item;\
+	\}\
+\}\
+\
+//  
+\f1 \'b5\'a5\'c5\'a9
+\f0  
+\f1 \'c8\'ad\'b8\'e9\'bf\'a1
+\f0  
+\f1 \'c3\'e2\'b7\'c2
+\f0 \
+void printDQ(DQueType* DQ) \{\
+	DQNode* tmp = DQ->front;\
+	printf("DeQue : [ ");\
+	while (tmp) \{\
+		printf("%3c", tmp->data);\
+		tmp = tmp->rlink;\
+	\}\
+	printf(" ]");\
+\}\
+\
+\
+\
+deQueTest.c\
+#include"deQue.h"\
+\
+int main(void) \{\
+	DQueType* DQ1 = createDQue(); // 
+\f1 \'b5\'a5\'c5\'a9
+\f0  
+\f1 \'bb\'fd\'bc\'ba
+\f0 \
+	element data;\
+	printf("\\n front 
+\f1 \'bb\'f0\'c0\'d4
+\f0  A> "); insertFront(DQ1, 'A'); printDQ(DQ1);\
+	printf("\\n front 
+\f1 \'bb\'f0\'c0\'d4
+\f0  B> "); insertFront(DQ1, 'B'); printDQ(DQ1);\
+	printf("\\n rear 
+\f1 \'bb\'f0\'c0\'d4
+\f0  C> "); insertRear(DQ1, 'C'); printDQ(DQ1);\
+	printf("\\n front 
+\f1 \'bb\'e8\'c1\'a6
+\f0  > "); data = deleteFront(DQ1); printDQ(DQ1);\
+	printf("\\t 
+\f1 \'bb\'e8\'c1\'a6
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd\'b4\'c2
+\f0  : %c", data);\
+	printf("\\n rear 
+\f1 \'bb\'e8\'c1\'a6
+\f0  > "); data = deleteRear(DQ1); printDQ(DQ1);\
+	printf("\\t 
+\f1 \'bb\'e8\'c1\'a6
+\f0  
+\f1 \'b5\'a5\'c0\'cc\'c5\'cd\'b4\'c2
+\f0  : %c", data);\
+\
+	return 0;\
+\
+\
+\}}
